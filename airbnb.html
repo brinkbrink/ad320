@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" rel="stylesheet">
+    <title>AirBnB</title>
+  </head>
+  <body>
+    <main>
+        <!-- <h1>AirBnB</h1> -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/1200px-Airbnb_Logo_B%C3%A9lo.svg.png">
+        <form>
+            <!-- <label for="prop_type">Property Type:</label> -->
+            <input id="prop_type" type="text" placeholder="Property Type">
+            <!-- <select id="prop_type" name="prop_type" value="Choose one!">
+                <option value="volvo">Apartment</option>
+                <option value="saab">House</option>
+                <option value="fiat">Fiat</option>
+                <option value="audi">Audi</option>
+              </select> -->
+            <!-- <label for="bedrooms">Bedrooms:</label> -->
+            <input id="bedrooms" type="text" placeholder="Number of Bedrooms">
+            <!-- <label for="beds">Beds:</label> -->
+            <input id="beds" type="text" placeholder="Number of Beds">
+        </form>
+        <button onclick="fetchListing()">FIND</button>
+        <div id="results">
+            <!-- <ul id="listing">HERE</ul> -->
+            <ul id="listing">Listing will appear here if found!</div>
+        </div>
+
+          
+    </main>
+    <script>
+      async function fetchListing() {
+
+        // const num_facts_text = document.getElementById("num-facts").value;
+        // const num_facts_number = parseInt(num_facts_text, 10);
+        const prop_type_type = document.getElementById("prop_type").value;
+        const bedroom_text = document.getElementById("bedrooms").value;
+        const bedroom_num = parseInt(bedroom_text, 10);
+        const bed_text = document.getElementById("beds").value;
+        const bed_num = parseInt(bed_text, 10);
+
+        // const api_endpoint = `https://dog-api.kinduff.com/api/facts?number=${num_facts_text}`;
+        const api_endpoint = `http://localhost:3000/findOne?property_type=${prop_type_type}&bedrooms=${bedroom_num}&beds=${bed_num}`;
+        const response = await fetch(api_endpoint);
+
+        const json_response = await response.json()
+        const listing = document.getElementById("listing");
+        const html = 
+        `
+        <li>${json_response.request.name}</li>
+        <li>Property Type: ${json_response.request.property_type}</li>
+        <li>ID: ${json_response.request._id}</li>
+        <li>Summary: ${json_response.request.summary}</li>
+        <li><a href="${json_response.request.listing_url}">${json_response.request.listing_url}</a></li>
+        <li>Bedrooms: ${json_response.request.bedrooms}</li>
+        <li>Beds: ${json_response.request.beds}</li>
+        `;
+        if (json_response.request === null) {
+            listing.innerHTML = 'NO RESULTS FOUND!';
+        } else {
+            listing.innerHTML = html;
+        }
+        
+        // const ul_listing = document.getElementById("listing");
+
+
+        // const ul_dog_facts = document.getElementById("dog-facts");
+        // ul_dog_facts.innerHTML = "";
+
+        ul_listing.innerHTML = "";
+        const li_name = document.createElement('li');
+        li_name.innertext = json_response.request.name;
+        ul_listing.appendChild(li_name);
+
+
+        // for (let i=0; i < num_facts_number; i++) {
+        //     const li = document.createElement('li');
+        //     li.innerText = json_response.facts[i];
+        //     ul_dog_facts.appendChild(li);
+        // }
+      }
+    </script>
+  </body>
+</html>
