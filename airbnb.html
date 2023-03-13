@@ -19,12 +19,9 @@
         <div id="results">
             <ul id="listing">Listing will appear here if found!</div>
         </div>
-
-          
     </main>
     <script>
       async function fetchListing() {
-
         const prop_type_type = document.getElementById("prop_type").value;
         const bedroom_text = document.getElementById("bedrooms").value;
         const bedroom_num = parseInt(bedroom_text, 10);
@@ -50,11 +47,6 @@
         } else {
             listing.innerHTML = html;
         }
-
-        ul_listing.innerHTML = "";
-        const li_name = document.createElement('li');
-        li_name.innertext = json_response.request.name;
-        ul_listing.appendChild(li_name);
       }
     </script>
   </body>
