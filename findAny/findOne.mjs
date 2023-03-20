@@ -19,7 +19,9 @@ app.post('/findOne', async function find (req,res)  {
     await client.connect();
     const db = client.db(req.body.database);
     const collect = db.collection(req.body.collection);
-    const result = await collect.findOne();
+    const filter = req.body.filter;
+    const projection = req.body.projection;
+    const result = await collect.findOne(filter, {projection});
     res.status(200);
     res.json(result);
   } catch (error) {
